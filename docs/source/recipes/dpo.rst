@@ -56,7 +56,7 @@ To use any of these, simply use the ``loss`` config entry or flag through the :r
     loss=torchtune.modules.loss.RSOLoss \
     gamma=0.5
 
-We also support custom contrastive losses! But due to our philosophy related to the simplicity of the recipes, we do not support any of them in torchtune.
+We also support custom contrastive losses! But due to our philosophy related to the simplicity of the recipes, we do not support any of them directly in torchtune.
 Instead, we provide a mechanism to make it possible to use a recipe with a custom loss without touching internals.
 
 Here's how:
