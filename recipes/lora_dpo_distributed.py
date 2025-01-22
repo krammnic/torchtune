@@ -11,6 +11,8 @@ from functools import partial
 from typing import Any, Dict, List, Optional, Tuple
 from warnings import warn
 
+import omegaconf
+
 import torch
 from omegaconf import DictConfig, ListConfig
 
@@ -289,6 +291,16 @@ class LoRADPORecipeDistributed(FTRecipeInterface):
         self._loss_fn = config.instantiate(cfg.loss)
 
         utils.log_rank_zero(log, "Loss is initialized.")
+
+        try:
+            self._forward = config.instantiate(cfg.forward)
+            self.concatenated_forward = self._forward.concatenated_forward
+            utils.log_rank_zero(log, "Concatenated forward is initialized.")
+        except omegaconf.errors.ConfigAttributeError:
+            utils.log_rank_zero(
+                log,
+                "Has not initialized custom concatenated_forward, using common one.",
+            )
 
         # sampler and dataloader depend on the tokenizer and loss_fn and should be
         # setup after all of these are setup
@@ -685,7 +697,10 @@ class LoRADPORecipeDistributed(FTRecipeInterface):
                     policy_rejected_log_probs,
                     policy_chosen_logits,
                     policy_rejected_logits,
-                ) = self.concatenated_forward(self._model, batch)
+                    *args,
+                ) = self.concatenated_forward(
+                    self._model, batch, self._device, self.activations_handling_ctx
+                )
 
                 policy_chosen_logits_mean = policy_chosen_logits.detach().mean()
                 policy_rejected_logits_mean = policy_rejected_logits.detach().mean()
@@ -699,12 +714,15 @@ class LoRADPORecipeDistributed(FTRecipeInterface):
                         reference_rejected_log_probs,
                         _,
                         _,
-                    ) = self.concatenated_forward(self._model, batch)
+                    ) = self.concatenated_forward(
+                        self._model, batch, self._device, self.activations_handling_ctx
+                    )
                 loss, chosen_rewards, rejected_rewards = self._loss_fn(
                     policy_chosen_log_probs,
                     policy_rejected_log_probs,
                     reference_chosen_log_probs,
                     reference_rejected_log_probs,
+                    *args,
                 )
 
                 loss = loss.mean()

@@ -147,8 +147,7 @@ class T5EncoderSelfAttention(nn.Module):
         output_proj (nn.Module): Projection layer for output.
 
     Raises:
-        ValueError: If ``num_heads % num_kv_heads != 0``
-        ValueError: If ``embed_dim // num_heads != head_dim``
+        ValueError: If ``num_heads % num_kv_heads != 0`` or ``embed_dim // num_heads != head_dim``
     """
 
     def __init__(
