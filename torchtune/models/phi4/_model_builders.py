@@ -19,19 +19,19 @@ the ``phi4_mini`` model builder uses the ``phi4`` component builder.
 
 def phi4_mini() -> TransformerDecoder:
     """
-    Builder for creating the Phi4 Mini 16K Instruct Model.
+    Builder for creating the Phi4 (14B) 16K Instruct Model.
 
     Note:
         This model does not currently support 128K context length nor optimizations
         such as sliding window attention.
 
     Returns:
-        TransformerDecoder: Instantiation of Phi4 Mini 16K Instruct Model
+        TransformerDecoder: Instantiation of Phi4 (14B) 16K Instruct Model
     """
     return phi3(
         vocab_size=100_352,
         num_layers=40,
-        num_heads=20,
+        num_heads=40,
         num_kv_heads=10,
         embed_dim=5120,
         intermediate_dim=17920,
@@ -55,7 +55,7 @@ def phi4_mini_tokenizer(path: str, special_tokens_path: Optional[str] = None, ma
             prepend/append tags.
 
     Returns:
-        Phi4MiniTikTokenTokenizer: Instantiation of the SPM tokenizer.
+        Phi4MiniTikTokenTokenizer: Instantiation of the TikToken tokenizer.
     """
     special_tokens = parse_hf_tokenizer_json(special_tokens_path) if special_tokens_path is not None else None
     template = _get_prompt_template(prompt_template) if prompt_template is not None else None
@@ -95,7 +95,7 @@ def lora_phi4_mini(
         quantize_base (bool): Whether to quantize base model weights
 
     Returns:
-        TransformerDecoder: Instantiation of Phi4 Mini model with LoRA applied
+        TransformerDecoder: Instantiation of Phi4 (14B) model with LoRA applied
     """
     return lora_phi3(
         lora_attn_modules=lora_attn_modules,
@@ -103,7 +103,7 @@ def lora_phi4_mini(
         apply_lora_to_output=apply_lora_to_output,
         vocab_size=100_352,
         num_layers=40,
-        num_heads=20,
+        num_heads=40,
         num_kv_heads=10,
         embed_dim=5120,
         intermediate_dim=17920,
@@ -120,7 +120,7 @@ def lora_phi4_mini(
 
 qlora_phi4_mini = partial(lora_phi4_mini, quantize_base=True)
 qlora_phi4_mini.__doc__ = """
-Builder for creating a Phi4 mini model with QLoRA enabled. Base model weights in linear layers
+Builder for creating a Phi4 (14B) model with QLoRA enabled. Base model weights in linear layers
 that LoRA is applied to are quantized per the QLoRA paper: https://arxiv.org/abs/2305.14314.
 Please see `lora_phi4_mini` for full API arguments.
 """
