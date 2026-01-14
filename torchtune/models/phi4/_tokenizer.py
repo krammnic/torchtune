@@ -4,7 +4,7 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 
-from typing import Any, Dict, List, Mapping, Optional, Tuple
+from typing import Any, Mapping, Optional
 
 from torchtune.data import Message, PromptTemplate, truncate
 from torchtune.modules.tokenizers import ModelTokenizer
@@ -37,27 +37,30 @@ for token_id in range(100267, 100352):
 CL100K_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""  # noqa
 
 
-class Phi4MiniTokenizer(ModelTokenizer, Transform):
+class Phi4Tokenizer(ModelTokenizer, Transform):
     """
     TikToken tokenizer configured with Phi4 (14B) special tokens.
 
     Args:
         merges_path (str): Path to merges.txt file.
         vocab_path (str): Path to vocab.json file.
-        special_tokens (Optional[Dict[str, int]]): Mapping containing special text tokens and
+        special_tokens (Optional[dict[str, int]]): Mapping containing special text tokens and
             their registered token IDs. If left as None, this will be set to the canonical
             Phi4 special tokens.
         max_seq_len (Optional[int]): Max sequence length to truncate tokens to.
         prompt_template (Optional[PromptTemplate]): Template used to format the messages based on their role.
+        truncation_type (str): type of truncation to apply, either "left" or "right".
+            Default is "right".
     """
 
     def __init__(
         self,
         merges_path: str = None,
         vocab_path: str = None,
-        special_tokens: Optional[Dict[str, int]] = None,
+        special_tokens: Optional[dict[str, int]] = None,
         max_seq_len: Optional[int] = None,
         prompt_template: Optional[PromptTemplate] = None,
+        truncation_type: str = "right",
     ):
         self.special_tokens = special_tokens or PHI4_SPECIAL_TOKENS
 
@@ -79,16 +82,18 @@ class Phi4MiniTokenizer(ModelTokenizer, Transform):
             self.pad_id,
         )
 
+        self.truncation_type = truncation_type
+
     @property
     def vocab_size(self):
         return self.tokenizer_model.vocab_size
 
     def encode(
         self, text: str, add_bos: bool = True, add_eos: bool = True
-    ) -> List[int]:
+    ) -> list[int]:
         return self.tokenizer_model.encode(text=text, add_bos=add_bos, add_eos=add_eos)
 
-    def decode(self, ids: List[int], skip_special_tokens: bool = True) -> str:
+    def decode(self, ids: list[int], skip_special_tokens: bool = True) -> str:
         """Decode token IDs to strings."""
         ids_for_decode = [
             token_id
@@ -105,11 +110,11 @@ class Phi4MiniTokenizer(ModelTokenizer, Transform):
 
     def tokenize_messages(
         self,
-        messages: List[Message],
+        messages: list[Message],
         *,
-        add_eos: bool = False,
+        add_end_tokens: bool = False,
         ignore_system_prompt: bool = False,
-    ) -> Tuple[List[int], List[bool]]:
+    ) -> tuple[list[int], list[bool]]:
         templated_messages = (
             self.prompt_template(messages) if self.prompt_template else messages
         )
@@ -136,7 +141,7 @@ class Phi4MiniTokenizer(ModelTokenizer, Transform):
                         f"Unsupported message content type: {item['type']}"
                     )
 
-            if add_eos and message.role == "assistant":
+            if add_end_tokens and message.role == "assistant":
                 tokens.append(self.special_tokens["<|im_end|>"])
             elif message.role != "assistant":
                 tokens.append(self.special_tokens["<|im_end|>"])
@@ -150,9 +155,17 @@ class Phi4MiniTokenizer(ModelTokenizer, Transform):
         # Finnaly, truncate if necessary.
         if self.max_seq_len and len(tokenized_messages) >= self.max_seq_len:
             tokenized_messages = truncate(
-                tokenized_messages, self.max_seq_len, self.eos_id if add_eos else None
+                tokens=tokenized_messages,
+                max_seq_len=self.max_seq_len,
+                eos_id=self.eos_id if add_end_tokens else None,
+                truncation_type=self.truncation_type,
             )
-            mask = truncate(mask, self.max_seq_len, message.masked if add_eos else None)
+            mask = truncate(
+                tokens=mask,
+                max_seq_len=self.max_seq_len,
+                eos_id=True if add_end_tokens else None,
+                truncation_type=self.truncation_type,
+            )
 
         return tokenized_messages, mask
 

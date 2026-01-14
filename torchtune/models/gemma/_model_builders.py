@@ -3,7 +3,7 @@
 #
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
-from typing import List, Optional
+from typing import Optional
 
 from torchtune.models.gemma._component_builders import gemma, lora_gemma
 from torchtune.modules import TransformerDecoder
@@ -43,7 +43,7 @@ def gemma_2b() -> TransformerDecoder:
     )
 
 
-def gemma_tokenizer(path: str, max_seq_len: Optional[int] = None, prompt_template: Optional[_TemplateType] = None) -> GemmaTokenizer:
+def gemma_tokenizer(path: str, max_seq_len: Optional[int] = None, prompt_template: Optional[_TemplateType] = None, truncation_type: str = "right") -> GemmaTokenizer:
     """
     Tokenizer for Gemma.
 
@@ -55,16 +55,17 @@ def gemma_tokenizer(path: str, max_seq_len: Optional[int] = None, prompt_templat
             If a string, it is assumed to be the dotpath of a :class:`~torchtune.data.PromptTemplateInterface`
             class. If a dictionary, it is assumed to be a custom prompt template mapping role to the
             prepend/append tags.
-        
+        truncation_type (str): type of truncation to apply, either "left" or "right".
+            Default is "right".
 
     Returns:
         GemmaTokenizer: Instantiation of the Gemma tokenizer
     """
-    return GemmaTokenizer(path=path, max_seq_len=max_seq_len, prompt_template=_get_prompt_template(prompt_template) if prompt_template is not None else None)
+    return GemmaTokenizer(path=path, max_seq_len=max_seq_len, prompt_template=_get_prompt_template(prompt_template) if prompt_template is not None else None, truncation_type=truncation_type)
 
 
 def lora_gemma_2b(
-    lora_attn_modules: List[LORA_ATTN_MODULES],
+    lora_attn_modules: list[LORA_ATTN_MODULES],
     apply_lora_to_mlp: bool = False,
     lora_rank: int = 8,
     lora_alpha: float = 16,
@@ -80,7 +81,7 @@ def lora_gemma_2b(
     https://github.com/tloen/alpaca-lora/blob/8bb8579e403dc78e37fe81ffbb253c413007323f/finetune.py#L41-L43.
 
     Args:
-        lora_attn_modules (List[LORA_ATTN_MODULES]): list of which linear layers
+        lora_attn_modules (list[LORA_ATTN_MODULES]): list of which linear layers
             LoRA should be applied to in each self-attention block. Options are
             ``{"q_proj", "k_proj", "v_proj", "output_proj"}``.
         apply_lora_to_mlp (bool): whether to apply LoRA to the MLP in each transformer layer.
@@ -148,7 +149,7 @@ def gemma_7b() -> TransformerDecoder:
     
     
 def lora_gemma_7b(
-    lora_attn_modules: List[LORA_ATTN_MODULES],
+    lora_attn_modules: list[LORA_ATTN_MODULES],
     apply_lora_to_mlp: bool = False,
     lora_rank: int = 8,
     lora_alpha: float = 16,
@@ -164,7 +165,7 @@ def lora_gemma_7b(
     https://github.com/tloen/alpaca-lora/blob/8bb8579e403dc78e37fe81ffbb253c413007323f/finetune.py#L41-L43.
 
     Args:
-        lora_attn_modules (List[LORA_ATTN_MODULES]): list of which linear layers
+        lora_attn_modules (list[LORA_ATTN_MODULES]): list of which linear layers
             LoRA should be applied to in each self-attention block. Options are
             ``{"q_proj", "k_proj", "v_proj", "output_proj"}``.
         apply_lora_to_mlp (bool): whether to apply LoRA to the MLP in each transformer layer.

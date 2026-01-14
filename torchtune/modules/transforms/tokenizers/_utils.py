@@ -5,10 +5,14 @@
 # LICENSE file in the root directory of this source tree.
 
 import json
-from typing import Any, Dict, List, Optional, Protocol, Tuple
+import logging
+from typing import Any, Optional, Protocol
 
 from torchtune.data._messages import Message
 from torchtune.data._utils import truncate
+from torchtune.utils import get_logger
+
+_log: logging.Logger = get_logger()
 
 
 class BaseTokenizer(Protocol):
@@ -18,26 +22,26 @@ class BaseTokenizer(Protocol):
     :class:`~torchtune.modules.transforms.tokenizers.TikTokenBaseTokenizer` for example implementations of this protocol.
     """
 
-    def encode(self, text: str, **kwargs: Dict[str, Any]) -> List[int]:
+    def encode(self, text: str, **kwargs: dict[str, Any]) -> list[int]:
         """
         Given a string, return the encoded list of token ids.
 
         Args:
             text (str): The text to encode.
-            **kwargs (Dict[str, Any]): kwargs.
+            **kwargs (dict[str, Any]): kwargs.
 
         Returns:
-            List[int]: The encoded list of token ids.
+            list[int]: The encoded list of token ids.
         """
         pass
 
-    def decode(self, token_ids: List[int], **kwargs: Dict[str, Any]) -> str:
+    def decode(self, token_ids: list[int], **kwargs: dict[str, Any]) -> str:
         """
         Given a list of token ids, return the decoded text, optionally including special tokens.
 
         Args:
-            token_ids (List[int]): The list of token ids to decode.
-            **kwargs (Dict[str, Any]): kwargs.
+            token_ids (list[int]): The list of token ids to decode.
+            **kwargs (dict[str, Any]): kwargs.
 
         Returns:
             str: The decoded text.
@@ -52,33 +56,34 @@ class ModelTokenizer(Protocol):
     for an example implementation of this protocol.
     """
 
-    special_tokens: Dict[str, int]
+    special_tokens: dict[str, int]
     max_seq_len: Optional[int]
 
     def tokenize_messages(
-        self, messages: List[Message], **kwargs: Dict[str, Any]
-    ) -> Tuple[List[int], List[bool]]:
+        self, messages: list[Message], **kwargs: dict[str, Any]
+    ) -> tuple[list[int], list[bool]]:
         """
         Given a list of messages, return a list of tokens and list of masks for
         the concatenated and formatted messages.
 
         Args:
-            messages (List[Message]): The list of messages to tokenize.
-            **kwargs (Dict[str, Any]): kwargs.
+            messages (list[Message]): The list of messages to tokenize.
+            **kwargs (dict[str, Any]): kwargs.
 
         Returns:
-            Tuple[List[int], List[bool]]: The list of token ids and the list of masks.
+            tuple[list[int], list[bool]]: The list of token ids and the list of masks.
         """
         pass
 
 
 def tokenize_messages_no_special_tokens(
     tokenizer: ModelTokenizer,
-    messages: List[Message],
+    messages: list[Message],
     *,
     bos_id: Optional[int] = None,
     eos_id: Optional[int] = None,
-) -> Tuple[List[int], List[bool]]:
+    truncation_type: str = "right",
+) -> tuple[list[int], list[bool]]:
     r"""Tokenize a list of messages one at a time then concatenate them,
     returning a list of tokens and a list of masks. Does not add any special
     tokens except for BOS and EOS (if provided). This serves as a common starting point for
@@ -106,14 +111,16 @@ def tokenize_messages_no_special_tokens(
 
     Args:
         tokenizer (ModelTokenizer): Tokenizer to encode messages with.
-        messages (List[Message]): A list of messages, each containing role, content,
+        messages (list[Message]): A list of messages, each containing role, content,
             and masked attributes.
         bos_id (Optional[int]): Beginning-of-sequence token id. If None, no BOS token will
             be added. Default None.
         eos_id (Optional[int]): End-of-sequence token id. If None, no EOS token will be added. Default None.
+        truncation_type (str): type of truncation to apply, either "left" or "right".
+            Default is "right".
 
     Returns:
-        Tuple[List[int], List[bool]]: The tokenized messages.
+        tuple[list[int], list[bool]]: The tokenized messages.
 
     Raises:
         RuntimeError: if any message in ``messages`` does not satisfy ``message['type'] == 'text'``.
@@ -172,15 +179,20 @@ def tokenize_messages_no_special_tokens(
 
     # Finally, truncate if necessary
     if max_seq_len is not None:
-        tokenized_messages = truncate(tokenized_messages, max_seq_len, eos_id)
+        tokenized_messages = truncate(
+            tokenized_messages, max_seq_len, eos_id, truncation_type=truncation_type
+        )
         mask = truncate(
-            mask, max_seq_len, message.masked if eos_id is not None else None
+            mask,
+            max_seq_len,
+            message.masked if eos_id is not None else None,
+            truncation_type=truncation_type,
         )
 
     return tokenized_messages, mask
 
 
-def parse_hf_tokenizer_json(tokenizer_json_path: str) -> Dict[str, int]:
+def parse_hf_tokenizer_json(tokenizer_json_path: str) -> dict[str, int]:
     """
     Parse the ``tokenizer.json`` file from a Hugging Face model to extract the
     special token str to id mapping.
@@ -189,7 +201,7 @@ def parse_hf_tokenizer_json(tokenizer_json_path: str) -> Dict[str, int]:
         tokenizer_json_path (str): Path to the ``tokenizer.json`` file.
 
     Returns:
-        Dict[str, int]: The special token str to id mapping.
+        dict[str, int]: The special token str to id mapping.
     """
     with open(tokenizer_json_path, "r") as f:
         tokenizer_json = json.load(f)

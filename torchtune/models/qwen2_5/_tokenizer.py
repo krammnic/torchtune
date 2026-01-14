@@ -3,7 +3,7 @@
 #
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 from torchtune.data import ChatMLTemplate, Message, PromptTemplate, truncate
 from torchtune.models.qwen2._tokenizer import (
@@ -50,7 +50,7 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
         merges_file (str): Path to merges.txt file.
             merges.txt contains all BPE merge operations, and this file is required to split a single word into
             byte-level BPE tokens.
-        special_tokens (Dict[str, int]): Special tokens to add to the tokenizer. Default is QWEN2_5_SPECIAL_TOKENS.
+        special_tokens (dict[str, int]): Special tokens to add to the tokenizer. Default is QWEN2_5_SPECIAL_TOKENS.
         max_seq_len (Optional[int]): A max sequence length to truncate tokens to.
             Default: None
         prompt_template (Optional[PromptTemplate]): template used to format the messages based on their role. This is used
@@ -75,6 +75,8 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
             large for long running processes (esp. for texts of language that do not use space between
             word, e.g. Chinese); technically not a memory leak but appears as one.
             By default, we set the cache size equals to size of the official Qwen2 tokenizer.
+        truncation_type (str): type of truncation to apply, either "left" or "right".
+            Default is "right".
 
     Example:
         >>> tokenizer = Qwen2Tokenizer(
@@ -88,7 +90,7 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
         self,
         path: str,
         merges_file: str,
-        special_tokens: Dict[str, int] = QWEN2_5_SPECIAL_TOKENS,
+        special_tokens: dict[str, int] = QWEN2_5_SPECIAL_TOKENS,
         max_seq_len: Optional[int] = None,
         *,
         prompt_template: Optional[PromptTemplate] = None,
@@ -98,6 +100,7 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
         eos_token: str = IM_END,
         pad_token: Optional[str] = ENDOFTEXT,
         bpe_cache_size: int = DEFAULT_QWEN2_TOKENIZER_BPE_CACHE_SIZE,
+        truncation_type: str = "right",
     ):
         super().__init__(
             path=path,
@@ -115,24 +118,25 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
 
         self.tool_call_start_id = self.special_tokens["<tool_call>"]
         self.tool_call_end_id = self.special_tokens["</tool_call>"]
+        self.truncation_type = truncation_type
 
     def tokenize_messages(
         self,
-        messages: List[Message],
+        messages: list[Message],
         *,
-        add_eos: bool = True,
-    ) -> Tuple[List[int], List[bool]]:
+        add_end_tokens: bool = True,
+    ) -> tuple[list[int], list[bool]]:
         """
         Given a list of messages, return a list of tokens for the concatenated
         and formatted messages.
 
         Args:
-            messages (List[Message]): The message list to tokenize.
-            add_eos (bool): Wether to add the tokenizer's eos_id at the end of the
-                sequence of messages. Default is True.
+            messages (list[Message]): The message list to tokenize.
+            add_end_tokens (bool): Wether to add the tokenizer's end of message
+                tokens, such as  eos_id. Default is True.
 
         Returns:
-            Tuple[List[int], List[bool]]: The list of token ids and the list of masks.
+            tuple[list[int], list[bool]]: The list of token ids and the list of masks.
 
         Raises:
             RuntimeError: If a message contains non-text content
@@ -179,16 +183,24 @@ class Qwen2_5Tokenizer(Qwen2Tokenizer):  # noqa: N801
                 break
 
         # Add the End-Of-Sequence token
-        if add_eos:
+        if add_end_tokens:
             tokenized_messages.append(self.eos_id)
             mask.append(mask[-1])
 
         # Finally, truncate if necessary
         if self.max_seq_len:
             tokenized_messages = truncate(
-                tokenized_messages, self.max_seq_len, self.eos_id if add_eos else None
+                tokens=tokenized_messages,
+                max_seq_len=self.max_seq_len,
+                eos_id=self.eos_id if add_end_tokens else None,
+                truncation_type=self.truncation_type,
             )
-            mask = truncate(mask, self.max_seq_len, True if add_eos else None)
+            mask = truncate(
+                tokens=mask,
+                max_seq_len=self.max_seq_len,
+                eos_id=True if add_end_tokens else None,
+                truncation_type=self.truncation_type,
+            )
 
         return tokenized_messages, mask
 

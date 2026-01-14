@@ -4,9 +4,6 @@
 # This source code is licensed under the BSD-style license found in the
 # LICENSE file in the root directory of this source tree.
 
-from dataclasses import dataclass
-from typing import Optional, Tuple, TypeVar
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -83,7 +80,7 @@ class DPOLoss(PreferenceLoss):
         self,
         policy_inputs: ChosenRejectedOutputs,
         reference_inputs: ChosenRejectedOutputs,
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Compute the DPO loss for a batch of policy and reference model log probabilities.
 
@@ -92,7 +89,7 @@ class DPOLoss(PreferenceLoss):
             reference_inputs (ChosenRejectedOutputs): Reference log-probs and logits required for the calculation.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple of three tensors:
+            tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple of three tensors:
                 - losses: The DPO loss for each example in the batch.
                 - chosen_rewards: Rewards for the chosen responses.
                 - rejected_rewards: Rewards for the rejected responses.
@@ -150,7 +147,7 @@ class RSOLoss(PreferenceLoss):
         self,
         policy_inputs: ChosenRejectedOutputs,
         reference_inputs: ChosenRejectedOutputs,
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Compute the RSO loss for a batch of policy and reference model log probabilities.
 
@@ -159,7 +156,7 @@ class RSOLoss(PreferenceLoss):
             reference_inputs (ChosenRejectedOutputs): Reference log-probs and logits required for the calculation.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple of three tensors:
+            tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple of three tensors:
                 - losses: The RSO loss for each example in the batch.
                 - chosen_rewards: Rewards for the chosen responses.
                 - rejected_rewards: Rewards for the rejected responses.

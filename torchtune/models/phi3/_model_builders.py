@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from torchtune.models.phi3._component_builders import phi3, lora_phi3
 from torchtune.models.phi3._tokenizer import Phi3MiniTokenizer
@@ -41,14 +41,14 @@ def phi3_mini() -> TransformerDecoder:
         norm_eps=1e-5,
     )
 
-def phi3_mini_tokenizer(path: str, special_tokens_path: Optional[str] = None, max_seq_len: Optional[int] = None, prompt_template: Optional[_TemplateType] = None) -> Phi3MiniTokenizer:
+def phi3_mini_tokenizer(path: str, special_tokens_path: Optional[str] = None, max_seq_len: Optional[int] = None, prompt_template: Optional[_TemplateType] = None, truncation_type: str = "right",) -> Phi3MiniTokenizer:
     """Phi-3 Mini tokenizer.
     Ref: https://huggingface.co/microsoft/Phi-3-mini-4k-instruct/blob/main/tokenizer_config.json
 
     Args:
         path (str): Path to the SPM tokenizer model.
         special_tokens_path (Optional[str]): Path to ``tokenizer.json`` from Hugging Face
-            model files that contains all registered special tokens, or a local json file 
+            model files that contains all registered special tokens, or a local json file
             structured similarly. Default is None to use the canonical Phi3 special tokens.
         max_seq_len (Optional[int]): maximum sequence length for tokenizing a single list of messages,
             after which the input will be truncated. Default is None.
@@ -56,6 +56,8 @@ def phi3_mini_tokenizer(path: str, special_tokens_path: Optional[str] = None, ma
             If a string, it is assumed to be the dotpath of a :class:`~torchtune.data.PromptTemplateInterface`
             class. If a dictionary, it is assumed to be a custom prompt template mapping role to the
             prepend/append tags.
+        truncation_type (str): type of truncation to apply, either "left" or "right".
+            Default is "right".
 
     Note:
         This tokenizer includes typical LM EOS and BOS tokens like
@@ -68,11 +70,11 @@ def phi3_mini_tokenizer(path: str, special_tokens_path: Optional[str] = None, ma
     """
     special_tokens = parse_hf_tokenizer_json(special_tokens_path) if special_tokens_path is not None else None
     template = _get_prompt_template(prompt_template) if prompt_template is not None else None
-    return Phi3MiniTokenizer(path=path, special_tokens=special_tokens, max_seq_len=max_seq_len, prompt_template=template)
+    return Phi3MiniTokenizer(path=path, special_tokens=special_tokens, max_seq_len=max_seq_len, prompt_template=template, truncation_type=truncation_type)
 
 
 def lora_phi3_mini(
-    lora_attn_modules: List[LORA_ATTN_MODULES],
+    lora_attn_modules: list[LORA_ATTN_MODULES],
     apply_lora_to_mlp: bool = False,
     apply_lora_to_output: bool = False,
     lora_rank: int = 8,
@@ -89,7 +91,7 @@ def lora_phi3_mini(
     https://github.com/tloen/alpaca-lora/blob/8bb8579e403dc78e37fe81ffbb253c413007323f/finetune.py#L41-L43.
 
     Args:
-        lora_attn_modules (List[LORA_ATTN_MODULES]): list of which linear layers
+        lora_attn_modules (list[LORA_ATTN_MODULES]): list of which linear layers
             LoRA should be applied to in each self-attention block. Options are
             ``{"q_proj", "k_proj", "v_proj", "output_proj"}``.
         apply_lora_to_mlp (bool): whether to apply LoRA to the MLP in each transformer layer.
