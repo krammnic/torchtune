@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -120,7 +120,7 @@ _IGNORE = {
 
 def llama4_meta_to_tune(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
     """
-    Convertor from Meta state dict to torchtune state dict. This handles:
+    Convertor from Original state dict to torchtune state dict. This handles:
     - skip loading weights from the _IGNORE list
     - skip loading the expert activation stats used in MOE inference
     - transpose the weight for router
@@ -153,7 +153,7 @@ def llama4_meta_to_tune(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.
 
 def llama4_tune_to_meta(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
     """
-    Convertor from torchtune state dict to Meta state dict. This handles:
+    Convertor from torchtune state dict to Original state dict. This handles:
     - transpose the weight for router
     - squeeze the expert dimension and transpose the weight for shared experts
     - flatten the expert dimension for experts weights

@@ -136,25 +136,25 @@ llama3 & llama3.1
 
 Models 3 and 3.1 from the `Llama3 family <https://llama.meta.com/llama3/>`_.
 
-Important: You need to request access on `Hugging Face <https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct>`__ before downloading it.
+Important: You need to request access on `Hugging Face <https://huggingface.co/<model-org>/Llama-3.1-8B-Instruct>`__ before downloading it.
 
 To download the Llama3.1-8B-Instruct model:
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3.1-8B-Instruct --output-dir /tmp/Meta-Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
+    tune download <model-org>/Llama-3.1-8B-Instruct --output-dir /tmp/Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
 
 To download the Llama3.1-70B-Instruct model:
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3.1-70B-Instruct --output-dir /tmp/Meta-Llama-3.1-70B-Instruct --ignore-patterns "original/consolidated*" --hf-token <HF_TOKEN>
+    tune download <model-org>/Llama-3.1-70B-Instruct --output-dir /tmp/Llama-3.1-70B-Instruct --ignore-patterns "original/consolidated*" --hf-token <HF_TOKEN>
 
 To download the Llama3.1-405B-Instruct model:
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3.1-405B-Instruct --ignore-patterns "original/consolidated*" --hf-token <HF_TOKEN>
+    tune download <model-org>/Llama-3.1-405B-Instruct --ignore-patterns "original/consolidated*" --hf-token <HF_TOKEN>
 
 To download the Llama3 weights of the above models, you can instead download from `Meta-Llama-3-8B-Instruct` and
 `Meta-Llama-3-70B-Instruct`, and remove the ignore patterns flag.

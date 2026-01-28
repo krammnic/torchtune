@@ -3,7 +3,7 @@
 #
 # This config assumes that you've run the following command before launching
 # this run:
-#   tune download meta-llama/Meta-Llama-3.1-8B-Instruct --output-dir /tmp/Meta-Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth"
+#   tune download <model-org>/Llama-3.1-8B-Instruct --output-dir /tmp/Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth"
 #
 # The default config uses an optimizer from bitsandbytes. If you do not have it installed,
 # you can install it with
@@ -25,7 +25,7 @@ output_dir: /tmp/torchtune/llama3_1_8B/full_single_device # /tmp may be deleted 
 # Tokenizer
 tokenizer:
   _component_: torchtune.models.llama3.llama3_tokenizer
-  path: /tmp/Meta-Llama-3.1-8B-Instruct/original/tokenizer.model
+  path: /tmp/Llama-3.1-8B-Instruct/original/tokenizer.model
   max_seq_len: null
 
 # Dataset
@@ -41,7 +41,7 @@ model:
 
 checkpointer:
   _component_: torchtune.training.FullModelHFCheckpointer
-  checkpoint_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  checkpoint_dir: /tmp/Llama-3.1-8B-Instruct/
   checkpoint_files: [
     model-00001-of-00004.safetensors,
     model-00002-of-00004.safetensors,

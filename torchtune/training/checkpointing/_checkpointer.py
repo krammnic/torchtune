@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -1038,7 +1038,7 @@ class FullModelHFCheckpointer(_CheckpointerInterface):
 
 class FullModelMetaCheckpointer(_CheckpointerInterface):
     """
-    Checkpointer which reads and writes checkpoints in Meta's format. Examples include
+    Checkpointer which reads and writes checkpoints in original format. Examples include
     the Llama-2-7b model from the meta-llama repo (https://huggingface.co/meta-llama/Llama-2-7b)
 
     Currently we support reading from a single checkpoint file only. Support for reading from
@@ -1137,7 +1137,7 @@ class FullModelMetaCheckpointer(_CheckpointerInterface):
 
     def load_checkpoint(self) -> dict[str, Any]:
         """
-        Load Meta checkpoint from file. Currently only loading from a single file is supported.
+        Load checkpoint from file. Currently only loading from a single file is supported.
         """
         state_dict: dict[str:Any] = {}
         model_state_dict = safe_torch_load(self._checkpoint_path)
@@ -1185,7 +1185,7 @@ class FullModelMetaCheckpointer(_CheckpointerInterface):
         **kwargs,
     ) -> None:
         """
-        Save Meta checkpoint to file. If ``intermediate_checkpoint`` is True, an additional
+        Save checkpoint to file. If ``intermediate_checkpoint`` is True, an additional
         checkpoint file ``recipe_state.pt`` is created in ``_output_dir/RECIPE_STATE_DIRNAME``
         which contains the recipe state.
 

@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -10,7 +10,7 @@ from torchtune.data import Message, PromptTemplateInterface
 class Llama2ChatTemplate(PromptTemplateInterface):
     """
     Prompt template that formats chat data of human and system prompts with appropriate tags
-    used in Llama2 pre-training. Taken from Meta's official `Llama inference
+    used in Llama2 pre-training. Taken from the original implementation's official `Llama inference
     repository <https://github.com/meta-llama/llama/blob/main/llama/generation.py>`_.
 
     .. code-block:: text

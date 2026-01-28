@@ -44,7 +44,7 @@ These are intended to be drop-in replacements for tokenizers in multimodal datas
         ],
     }
     transform = Llama3VisionTransform(
-        path="/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model",
+        path="/tmp/Llama-3-8B-Instruct/original/tokenizer.model",
         tile_size=224,
         patch_size=14,
     )
@@ -65,7 +65,7 @@ You can pass them into any multimodal dataset builder just as you would a model 
     from torchtune.models.llama3_2_vision import Llama3VisionTransform
 
     transform = Llama3VisionTransform(
-        path="/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model",
+        path="/tmp/Llama-3-8B-Instruct/original/tokenizer.model",
         tile_size=224,
         patch_size=14,
     )

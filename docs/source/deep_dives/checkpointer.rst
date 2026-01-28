@@ -44,7 +44,7 @@ definition.
 
 Let's look at the two popular formats for Llama 3.2.
 
-**Meta Format**
+**Checkpoint Format**
 
 This is the format supported by the official Llama 3.2 implementation. When you download the Llama 3.2 3B model
 from the `meta-llama website <https://llama.meta.com/llama-downloads>`_, you'll get access to a single

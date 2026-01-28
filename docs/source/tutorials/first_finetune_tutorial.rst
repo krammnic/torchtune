@@ -27,15 +27,14 @@ Downloading a model
 The first step in any finetuning job is to download a pretrained base model. torchtune supports an integration
 with the `Hugging Face Hub <https://huggingface.co/docs/hub/en/index>`_ - a collection of the latest and greatest model weights.
 
-For this tutorial, you're going to use the `Llama2 7B model from Meta <https://llama.meta.com/>`_. Llama2 is a "gated model",
-meaning that you need to be granted access in order to download the weights. Follow `these instructions <https://huggingface.co/meta-llama>`_ on the official Meta page
+For this tutorial, you're going to use the Llama2 7B model. Llama2 is a "gated model",
+meaning that you need to be granted access in order to download the weights. Follow the instructions on the official Llama page
 hosted on Hugging Face to complete this process. This should take less than 5 minutes. To verify that you have the access, go to the `model page <https://huggingface.co/meta-llama/Llama-2-7b-hf/tree/main>`_.
 You should be able to see the model files. If not, you may need to accept the agreement to complete the process.
 
 .. note::
 
   Alternatively, you can opt to download the model directly through the Llama2 repository.
-  See `this page <https://llama.meta.com/get-started#getting-the-models>`_ for more details.
 
 Once you have authorization, you will need to authenticate with Hugging Face Hub. The easiest way to do so is to provide an
 access token to the download script. You can find your token `here <https://huggingface.co/settings/tokens>`_.
@@ -44,7 +43,7 @@ Then, it's as simple as:
 
 .. code-block:: bash
 
-  tune download meta-llama/Llama-2-7b-hf \
+  tune download <model-org>/Llama-2-7b-hf \
     --output-dir /tmp/Llama-2-7b-hf \
     --hf-token <ACCESS TOKEN>
 

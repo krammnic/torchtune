@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the

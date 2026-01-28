@@ -16,8 +16,8 @@ in just two steps:
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3-8B-Instruct  \
-    --output-dir /tmp/Meta-Llama-3-8B-Instruct \
+    tune download <model-org>/Llama-3-8B-Instruct  \
+    --output-dir /tmp/Llama-3-8B-Instruct \
     --ignore-patterns "original/consolidated.00.pth" \
     --HF_TOKEN <HF_TOKEN>
 

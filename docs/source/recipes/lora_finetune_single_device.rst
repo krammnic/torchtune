@@ -19,8 +19,8 @@ We provide configs which you can get up and running quickly. Here is an example 
 .. code-block:: bash
 
     # download the model
-    tune download meta-llama/Meta-Llama-3.1-8B-Instruct \
-    --output-dir /tmp/Meta-Llama-3.1-8B-Instruct \
+    tune download <model-org>/Llama-3.1-8B-Instruct \
+    --output-dir /tmp/Llama-3.1-8B-Instruct \
     --ignore-patterns "original/consolidated.00.pth"
 
     # run the recipe
@@ -53,5 +53,5 @@ Interested in seeing this recipe in action? Check out some of our tutorials to s
 * :ref:`Finetuning Llama2 with LoRA<lora_finetune_label>`
 * :ref:`Finetuning Llama2 with QLoRA<qlora_finetune_label>`
 * :ref:`Fine-tuning Llama3 with Chat Data<chat_tutorial_label>`
-* :ref:`Meta Llama3 in torchtune<llama3_label>`
+* :ref:`Llama3 in torchtune<llama3_label>`
 * :ref:`Fine-Tune Your First LLM<finetune_llama_label>`

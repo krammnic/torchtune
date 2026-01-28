@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -244,7 +244,7 @@ class Download(Subcommand):
                 and parsed_handle.owner != "metaresearch"
             ):
                 warn(
-                    f"Requested PyTorch model {handle} was not published from Meta, and therefore "
+                    f"Requested PyTorch model {handle} was not published from the original implementation, and therefore "
                     "may not be compatible with torchtune."
                 )
             if parsed_handle.framework not in {"pytorch", "transformers"}:

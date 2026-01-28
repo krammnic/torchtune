@@ -4,7 +4,7 @@
 # This config assumes that you've ran the following commands before launching KD:
 # First download the student and teacher models
 #   tune download meta-llama/Llama-3.2-1B-Instruct --output-dir /tmp/Llama-3.2-1B-Instruct --ignore-patterns "original/consolidated.00.pth"
-#   tune download meta-llama/Meta-Llama-3.1-8B-Instruct --output-dir /tmp/Meta-Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth"
+#   tune download <model-org>/Llama-3.1-8B-Instruct --output-dir /tmp/Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth"
 #
 # You get better results using KD if the teacher model has already been fine-tuned on the target dataset:
 #   tune run --nnodes 1 --nproc_per_node 2 lora_finetune_distributed --config llama3_1/8B_lora
@@ -51,7 +51,7 @@ save_adapter_weights_only: False
 # Teacher checkpoint
 teacher_checkpointer:
   _component_: torchtune.training.FullModelHFCheckpointer
-  checkpoint_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  checkpoint_dir: /tmp/Llama-3.1-8B-Instruct/
   checkpoint_files: [
     model-00001-of-00004.safetensors,
     model-00002-of-00004.safetensors,

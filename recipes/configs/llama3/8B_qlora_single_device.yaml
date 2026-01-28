@@ -3,7 +3,7 @@
 #
 # This config assumes that you've run the following command before launching
 # this run:
-#   tune download meta-llama/Meta-Llama-3-8B-Instruct --output-dir /tmp/Meta-Llama-3-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
+#   tune download <model-org>/Llama-3-8B-Instruct --output-dir /tmp/Llama-3-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
 #
 # To launch on a single device, run the following command from root:
 #   tune run lora_finetune_single_device --config llama3/8B_qlora_single_device
@@ -30,12 +30,12 @@ model:
 # Tokenizer
 tokenizer:
   _component_: torchtune.models.llama3.llama3_tokenizer
-  path: /tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model
+  path: /tmp/Llama-3-8B-Instruct/original/tokenizer.model
   max_seq_len: null
 
 checkpointer:
   _component_: torchtune.training.FullModelHFCheckpointer
-  checkpoint_dir: /tmp/Meta-Llama-3-8B-Instruct/
+  checkpoint_dir: /tmp/Llama-3-8B-Instruct/
   checkpoint_files: [
     model-00001-of-00004.safetensors,
     model-00002-of-00004.safetensors,

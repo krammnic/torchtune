@@ -1,7 +1,7 @@
 .. _llama3_label:
 
 ========================
-Meta Llama3 in torchtune
+Llama3 in torchtune
 ========================
 
 .. grid:: 2
@@ -23,9 +23,9 @@ Meta Llama3 in torchtune
 Llama3-8B
 ---------
 
-`Meta Llama 3 <https://llama.meta.com/llama3>`_ is a new family of models released by Meta AI that improves upon the performance of the Llama2 family
-of models across a `range of different benchmarks <https://huggingface.co/meta-llama/Meta-Llama-3-8B#base-pretrained-models>`_.
-Currently there are two different sizes of Meta Llama 3: 8B and 70B. In this tutorial we will focus on the 8B size model.
+Llama 3 is a new family of models
+of models across a range of different benchmarks.
+Currently there are two different sizes of Llama 3: 8B and 70B. In this tutorial we will focus on the 8B size model.
 There are a few main changes between Llama2-7B and Llama3-8B models:
 
 - Llama3-8B uses `grouped-query attention <https://arxiv.org/abs/2305.13245>`_ instead of the standard multi-head attention from Llama2-7B
@@ -40,13 +40,13 @@ Getting access to Llama3-8B-Instruct
 ------------------------------------
 
 For this tutorial, we will be using the instruction-tuned version of Llama3-8B. First, let's download the model from Hugging Face. You will need to follow the instructions
-on the `official Meta page <https://github.com/meta-llama/llama3/blob/main/README.md>`_ to gain access to the model.
+on the official Llama page to gain access to the model.
 Next, make sure you grab your Hugging Face token from `here <https://huggingface.co/settings/tokens>`_.
 
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3-8B-Instruct \
+    tune download <model-org>/Llama-3-8B-Instruct \
         --output-dir <checkpoint_dir> \
         --hf-token <ACCESS TOKEN>
 
@@ -256,5 +256,5 @@ discussed in `this readme <https://github.com/pytorch/ao/tree/main/torchao/_mode
 to those in the previously-linked table.
 
 
-This is just the beginning of what you can do with Meta Llama3 using torchtune and the broader ecosystem.
+This is just the beginning of what you can do with Llama3 using torchtune and the broader ecosystem.
 We look forward to seeing what you build!

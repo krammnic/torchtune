@@ -93,7 +93,7 @@ First, make sure that you have downloaded all the model weights. For this exampl
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3.1-8B-Instruct --output-dir /tmp/Meta-Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
+    tune download <model-org>/Llama-3.1-8B-Instruct --output-dir /tmp/Llama-3.1-8B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
 
     tune download meta-llama/Llama-3.2-1B-Instruct --output-dir /tmp/Llama-3.2-1B-Instruct --ignore-patterns "original/consolidated.00.pth" --hf-token <HF_TOKEN>
 
@@ -137,7 +137,7 @@ effects of not fine-tuning the teacher model first. To change the teacher model,
 
   teacher_checkpointer:
     _component_: torchtune.training.FullModelHFCheckpointer
-    checkpoint_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+    checkpoint_dir: /tmp/Llama-3.1-8B-Instruct/
     checkpoint_files: [
         model-00001-of-00004.safetensors,
         model-00002-of-00004.safetensors,

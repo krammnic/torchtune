@@ -61,7 +61,7 @@ The ``tune download <path>`` command downloads any model from the Hugging Face o
 
 .. code-block:: bash
 
-    $ tune download meta-llama/Meta-Llama-3-8B-Instruct
+    $ tune download <model-org>/Llama-3-8B-Instruct
     Successfully downloaded model repo and wrote to the following locations:
     ./model/config.json
     ./model/README.md
@@ -78,7 +78,7 @@ The ``tune download <path>`` command downloads any model from the Hugging Face o
 
 **Download a gated model**
 
-A lot of recent large pretrained models released from organizations like Meta or MistralAI require you to agree
+A lot of recent large pretrained models released from organizations require you to agree
 to the usage terms and conditions before you are allowed to download their model. If this is the case, you can specify
 a Hugging Face access token.
 
@@ -86,7 +86,7 @@ You can find the access token `here <https://huggingface.co/docs/hub/en/security
 
 .. code-block:: bash
 
-    $ tune download meta-llama/Meta-Llama-3-8B-Instruct --hf-token <TOKEN>
+    $ tune download <model-org>/Llama-3-8B-Instruct --hf-token <TOKEN>
     Successfully downloaded model repo and wrote to the following locations:
     ./model/config.json
     ./model/README.md
@@ -105,7 +105,7 @@ with matching names. By default we ignore safetensor files, but if you want to i
 
 .. code-block:: bash
 
-    $ tune download meta-llama/Meta-Llama-3-8B-Instruct --hf-token <TOKEN> --ignore-patterns None
+    $ tune download <model-org>/Llama-3-8B-Instruct --hf-token <TOKEN> --ignore-patterns None
     Successfully downloaded model repo and wrote to the following locations:
     ./model/config.json
     ./model/README.md

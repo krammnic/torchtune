@@ -41,7 +41,7 @@ for the Llama2 chat model, we can see that special tags are added:
     You are a helpful, respectful, and honest assistant.
     <</SYS>>
 
-    Hi! I am a human. [/INST] Hello there! Nice to meet you! I'm Meta AI, your friendly AI assistant </s>
+    Hi! I am a human. [/INST] Hello there! Nice to meet you! I'm the original authors, your friendly AI assistant </s>
 
 Llama3 Instruct `overhauled <https://llama.meta.com/docs/model-cards-and-prompt-formats/meta-llama-3>`_
 the template from Llama2 to better support multiturn conversations. The same text
@@ -55,7 +55,7 @@ in the Llama3 Instruct format would look like this:
 
     Hi! I am a human.<|eot_id|><|start_header_id|>assistant<|end_header_id|>
 
-    Hello there! Nice to meet you! I'm Meta AI, your friendly AI assistant<|eot_id|>
+    Hello there! Nice to meet you! I'm the original authors, your friendly AI assistant<|eot_id|>
 
 The tags are entirely different, and they are actually encoded differently than in
 Llama2. Let's walk through tokenizing an example with the Llama2 template and the
@@ -180,7 +180,7 @@ than Llama2.
 
     from torchtune.models.llama3 import llama3_tokenizer
 
-    tokenizer = llama3_tokenizer("/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model")
+    tokenizer = llama3_tokenizer("/tmp/Llama-3-8B-Instruct/original/tokenizer.model")
     messages = [Message.from_dict(msg) for msg in sample]
     tokens, mask = tokenizer.tokenize_messages(messages)
     print(tokenizer.decode(tokens))
@@ -283,7 +283,7 @@ look like so:
     from torchtune.datasets import chat_dataset
     from torchtune.models.llama3 import llama3_tokenizer
 
-    tokenizer = llama3_tokenizer("/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model")
+    tokenizer = llama3_tokenizer("/tmp/Llama-3-8B-Instruct/original/tokenizer.model")
     ds = chat_dataset(
         tokenizer=tokenizer,
         source="json",
@@ -298,7 +298,7 @@ look like so:
     # In config
     tokenizer:
       _component_: torchtune.models.llama3.llama3_tokenizer
-      path: /tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model
+      path: /tmp/Llama-3-8B-Instruct/original/tokenizer.model
 
     dataset:
       _component_: torchtune.datasets.chat_dataset

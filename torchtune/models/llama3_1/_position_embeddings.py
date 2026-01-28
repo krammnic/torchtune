@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -21,7 +21,7 @@ class Llama3ScaledRoPE(nn.Module):
     In this implementation we cache the embeddings for each position upto
     ``max_seq_len`` by computing this during init.
 
-    Default scaling factors are from the following Meta-Llama code:
+    Default scaling factors are from the following Llama code:
     https://github.com/meta-llama/llama-models/blob/dc42f22a3b05502e7296402b019a51f57fa045c9/models/llama3_1/api/model.py#L41
 
     Args:

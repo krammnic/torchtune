@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -10,7 +10,7 @@ from typing import Any, Optional
 
 import torch
 
-# state dict key mappings from Meta's format to torchtune's format
+# state dict key mappings from original format to torchtune's format
 _FROM_META = {
     "tok_embeddings.weight": "tok_embeddings.weight",
     "norm.weight": "norm.scale",
@@ -75,7 +75,7 @@ def get_mapped_key(key: str, mapping_dict: dict[str, str]) -> str:
 
 def meta_to_tune(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
     """
-    Convert a state dict from Meta's format to torchtune's format. State dicts
+    Convert a state dict from original format to torchtune's format. State dicts
     from multiple checkpoint files should be consolidated into a single state dict
     before calling this function.
 
@@ -83,7 +83,7 @@ def meta_to_tune(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]
     repo in HF (https://huggingface.co/meta-llama/Llama-2-7b).
 
     Args:
-        state_dict (dict[str, torch.Tensor]): State dict in Meta's format.
+        state_dict (dict[str, torch.Tensor]): State dict in original format.
 
     Returns:
         dict[str, torch.Tensor]: State dict in torchtune's format.
@@ -99,7 +99,7 @@ def meta_to_tune(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]
 
 def tune_to_meta(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
     """
-    Convert a state dict from torchtune's format to Meta's format. This function
+    Convert a state dict from torchtune's format to original format. This function
     doesn't handle any sharding or splitting of state dicts. It follows the
     state_dict IN -> state_dict OUT pattern.
 
@@ -107,7 +107,7 @@ def tune_to_meta(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]
         state_dict (dict[str, torch.Tensor]): State dict in torchtune's format.
 
     Returns:
-        dict[str, torch.Tensor]: State dict in Meta's format.
+        dict[str, torch.Tensor]: State dict in original format.
     """
     converted_state_dict = {}
     inverted_mapping_dict = {v: k for k, v in _FROM_META.items()}

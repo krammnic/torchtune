@@ -23,7 +23,7 @@ After supervised fine-tuning, here is an example of using either LoRA-based fine
 
 .. code-block:: bash
 
-    tune download meta-llama/Meta-Llama-3.1-8B-Instruct \
+    tune download <model-org>/Llama-3.1-8B-Instruct \
     --ignore-patterns "original/consolidated.00.pth"
     --HF_TOKEN <HF_TOKEN>
 

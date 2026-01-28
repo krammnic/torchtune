@@ -36,7 +36,7 @@ Example local text completion datasets
    from torchtune.datasets import text_completion_dataset
 
    m_tokenizer = llama3_tokenizer(
-       path="/tmp/Meta-Llama-3.1-8B/original/tokenizer.model",
+       path="/tmp/Llama-3.1-8B/original/tokenizer.model",
        max_seq_len=8192
    )
 
@@ -69,7 +69,7 @@ This can also be accomplished via the yaml config:
    # In config
    tokenizer:
      _component_: torchtune.models.llama3.llama3_tokenizer
-     path: /tmp/Meta-Llama-3.1-8B/original/tokenizer.model
+     path: /tmp/Llama-3.1-8B/original/tokenizer.model
      max_seq_len: 8192
 
    dataset:
@@ -96,7 +96,7 @@ This can also be accomplished via the yaml config:
    from torchtune.datasets import text_completion_dataset
 
    m_tokenizer = llama3_tokenizer(
-       path="/tmp/Meta-Llama-3.1-8B/original/tokenizer.model",
+       path="/tmp/Llama-3.1-8B/original/tokenizer.model",
        max_seq_len=8192
    )
 
@@ -115,7 +115,7 @@ Similarly, this can also be accomplished via the yaml config:
    # In config
    tokenizer:
      _component_: torchtune.models.llama3.llama3_tokenizer
-     path: /tmp/Meta-Llama-3.1-8B/original/tokenizer.model
+     path: /tmp/Llama-3.1-8B/original/tokenizer.model
      max_seq_len: 8192
 
    dataset:

@@ -149,7 +149,7 @@ For example, here we change the ``"<|begin_of_text|>"`` and ``"<|end_of_text|>"`
     from torchtune.models.llama3 import llama3_tokenizer
 
     tokenizer = llama3_tokenizer(
-        path="/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model",
+        path="/tmp/Llama-3-8B-Instruct/original/tokenizer.model",
         special_tokens_path="tokenizer/special_tokens.json",
     )
     print(tokenizer.special_tokens)
@@ -160,7 +160,7 @@ For example, here we change the ``"<|begin_of_text|>"`` and ``"<|end_of_text|>"`
     # In config
     tokenizer:
       _component_: torchtune.models.llama3.llama3_tokenizer
-      path: /tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model
+      path: /tmp/Llama-3-8B-Instruct/original/tokenizer.model
       special_tokens_path: tokenizer/special_tokens.json
 
 .. _base_tokenizers:

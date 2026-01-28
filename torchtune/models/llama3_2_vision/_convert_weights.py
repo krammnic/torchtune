@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -163,7 +163,7 @@ def llama3_vision_meta_to_tune(
     state_dict: dict[str, torch.Tensor],
 ) -> dict[str, torch.Tensor]:
     """
-    Convertor from Meta state dict to torchtune state dict. This handles:
+    Convertor from Original state dict to torchtune state dict. This handles:
     - Updateing the cross attention layer numbers
     - reshaping the convolution weights
     - skip loading the rope embeddings
@@ -205,7 +205,7 @@ def llama3_vision_tune_to_meta(
     state_dict: dict[str, torch.Tensor],
 ) -> dict[str, torch.Tensor]:
     """
-    Convertor from torchtune state dict to Meta state dict. This handles:
+    Convertor from torchtune state dict to Original state dict. This handles:
     - Updateing the cross attention layer numbers
     - reshaping the convolution weights
     """
@@ -319,7 +319,7 @@ def llama3_vision_hf_to_tune(
                     device=value.device,
                     dtype=value.dtype,
                 )
-                # Loop through aspect ratios and assign precomputed embeds back to Meta Llama embeddings
+                # Loop through aspect ratios and assign precomputed embeds back to original Llama embeddings
                 for i, (h, w) in enumerate(supported_aspect_ratios or []):
                     if h * w == num_tiles:  # h*w < num_tiles is redundant
                         # i == 0 is used for padding in HF

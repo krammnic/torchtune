@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+# Copyright information withheld for double-blind review.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -243,7 +243,7 @@ def generate(
         >>> model = llama3_8b().cuda()
 
         >>> checkpointer = FullModelHFCheckpointer(
-        ...     checkpoint_dir="/tmp/Meta-Llama-3-8B-Instruct",
+        ...     checkpoint_dir="/tmp/Llama-3-8B-Instruct",
         ...     checkpoint_files=[
         ...         "model-00001-of-00004.safetensors",
         ...         "model-00002-of-00004.safetensors",
@@ -256,7 +256,7 @@ def generate(
         >>> checkpoint = checkpointer.load_checkpoint()
         >>> model.load_state_dict(checkpoint["model"])
 
-        >>> tokenizer = llama3_tokenizer("/tmp/Meta-Llama-3-8B-Instruct/original/tokenizer.model")
+        >>> tokenizer = llama3_tokenizer("/tmp/Llama-3-8B-Instruct/original/tokenizer.model")
         >>> messages = [
         ...     Message(role="assistant", content="Hi my name is"),
         ... ]
