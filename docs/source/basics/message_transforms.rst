@@ -8,8 +8,6 @@ Message transforms perform the conversion of raw sample dictionaries from your d
 :class:`~torchtune.data.Message` structure. Once you data is represented as Messages, torchtune will handle
 tokenization and preparing it for the model.
 
-.. TODO (rafiayub): place an image here to depict overall pipeline
-
 
 Configuring message transforms
 ------------------------------

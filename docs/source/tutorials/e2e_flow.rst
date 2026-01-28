@@ -182,7 +182,6 @@ We've fine-tuned a model. But how well does this model really do? Let's determin
 Run evals using EleutherAI's Eval Harness
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO (SalmanMohammadi) ref eval recipe docs
 
 torchtune integrates with
 `EleutherAI's evaluation harness <https://github.com/EleutherAI/lm-evaluation-harness>`_.

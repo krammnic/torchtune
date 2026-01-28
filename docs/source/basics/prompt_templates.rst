@@ -177,8 +177,6 @@ prompt template class.
     # assistant, Assistant: Is AI overhyped?
     #
 
-.. TODO (RdoubleA) add a section on how to define prompt templates for inference once generate script is finalized
-
 Custom prompt templates
 -----------------------
 

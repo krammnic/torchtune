@@ -10,8 +10,6 @@ import torch.nn as nn
 from torchtune.config._utils import _get_component_from_path
 from torchtune.modules.transformer import TransformerDecoder
 
-
-# TODO (SalmanMohammadi) - add a tutorial for fine-tuning classifiers
 def classifier_model(
     num_classes: int, base_model_path: str, **base_model_kwargs: dict[str, Any]
 ) -> Union[TransformerDecoder, nn.Module]:

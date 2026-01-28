@@ -1,8 +1,3 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
-#
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree.
 
 import argparse
 import os
@@ -82,8 +77,6 @@ For a list of all possible recipes, run `tune ls`."""
     @record
     def _run_distributed(self, args: argparse.Namespace, is_builtin: bool):
         """Run a recipe with torchrun."""
-        # TODO (rohan-varma): Add check that nproc_per_node <= cuda device count. Currently,
-        # we don't do this since we test on CPUs for distributed. Will update once multi GPU CI is supported.
         print("Running with torchrun...")
         # Have to reset the argv so that the recipe can be run with the correct arguments
         args.training_script = args.recipe

@@ -289,7 +289,6 @@ class FullDPORecipeDistributed(FTRecipeInterface):
             model_state_dict=checkpoint_dict[training.MODEL_KEY],
         )
 
-        # TODO (@SalmanMohammadi) investigate TP for ref model
         self._ref_model = self._setup_reference_model(
             cfg_model=cfg.model,
             fsdp_cpu_offload=cfg.get("fsdp_cpu_offload", False),

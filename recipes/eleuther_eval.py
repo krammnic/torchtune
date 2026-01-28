@@ -71,8 +71,6 @@ class _VLMEvalWrapper(HFMultimodalLM):
         batch_size: int = 8,
         dtype: torch.dtype = torch.bfloat16,
         enable_kv_cache: bool = True,
-        # TODO (@joecummings): Update these defaults once more multimodal
-        # tasks are added to the eval harness
         image_tag: str = "<image>",
         max_images_per_sample: int = 7,
     ):

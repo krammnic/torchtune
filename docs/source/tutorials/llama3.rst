@@ -105,7 +105,6 @@ For example, on two devices:
 
 Finally, if we want to use even less memory, we can leverage torchtune's QLoRA recipe via:
 
-.. TODO (SalmanMohammadi) ref qlora recipe page
 
 .. code-block:: bash
 
@@ -183,8 +182,6 @@ Try it for yourself and see what accuracy your model gets!
 
 Generating text with our fine-tuned Llama3 model
 ------------------------------------------------
-
-.. TODO (SalmanMohammadi) ref generate recipe page
 
 Next, let's look at one other way we can evaluate our model: generating text! torchtune provides a
 `recipe for generation <https://github.com/pytorch/torchtune/blob/main/recipes/generate.py>`_ as well.
