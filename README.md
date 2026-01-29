@@ -333,50 +333,6 @@ torchtune focuses on integrating with popular tools and libraries from the ecosy
 
 &nbsp;
 
-### Community Contributions
-
-We really value our community and the contributions made by our wonderful users. We'll use this section to call out some of these contributions. If you'd like to help out as well, please see the [CONTRIBUTING](CONTRIBUTING.md) guide.
-
-- [@SalmanMohammadi](https://github.com/salmanmohammadi) for adding a comprehensive end-to-end recipe for [Reinforcement Learning from Human Feedback (RLHF)](recipes/ppo_full_finetune_single_device.py) finetuning with PPO to torchtune
-- [@fyabc](https://github.com/fyabc) for adding Qwen2 models, tokenizer, and recipe integration to torchtune
-- [@solitude-alive](https://github.com/solitude-alive) for adding the [Gemma 2B model](torchtune/models/gemma/) to torchtune, including recipe changes, numeric validations of the models and recipe correctness
-- [@yechenzhi](https://github.com/yechenzhi) for adding [Direct Preference Optimization (DPO)](recipes/lora_dpo_single_device.py) to torchtune, including the recipe and config along with correctness checks
-- [@Optimox](https://github.com/Optimox) for adding all the [Gemma2 variants](torchtune/models/gemma2) to torchtune!
-
-
-&nbsp;
-
-## Acknowledgements 🙏
-
-The transformer code in this repository is inspired by the original [Llama2 code](https://github.com/meta-llama/llama/blob/main/llama/model.py). We also want to give a huge shout-out to EleutherAI, Hugging Face and
-Weights & Biases for being wonderful collaborators and for working with us on some of these integrations within torchtune. In addition, we want to acknowledge some other awesome libraries and tools from the ecosystem:
-
-- [gpt-fast](https://github.com/meta-pytorch/gpt-fast) for performant LLM inference techniques which we've adopted out-of-the-box
-- [llama recipes](https://github.com/meta-llama/llama-recipes) for spring-boarding the llama2 community
-- [bitsandbytes](https://github.com/TimDettmers/bitsandbytes) for bringing several memory and performance based techniques to the PyTorch ecosystem
-- [@winglian](https://github.com/winglian/) and [axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) for early feedback and brainstorming on torchtune's design and feature set.
-- [lit-gpt](https://github.com/Lightning-AI/litgpt) for pushing the LLM finetuning community forward.
-- [HF TRL](https://github.com/huggingface/trl) for making reward modeling more accessible to the PyTorch community.
-
-&nbsp;
-
-## Citing torchtune 📝
-
-If you find the torchtune library useful, please cite it in your work as below.
-
-```bibtex
-@software{torchtune,
-  title = {torchtune: PyTorch's finetuning library},
-  author = {torchtune maintainers and contributors},
-  url = {https//github.com/pytorch/torchtune},
-  license = {BSD-3-Clause},
-  month = apr,
-  year = {2024}
-}
-```
-
-&nbsp;
-
 ## License
 
 torchtune is released under the [BSD 3 license](./LICENSE). However you may have other legal obligations that govern your use of other content, such as the terms of service for third-party models.
