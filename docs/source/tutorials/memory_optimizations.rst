@@ -4,8 +4,6 @@
 Memory Optimization Overview
 ============================
 
-**Author**: `Salman Mohammadi <https://github.com/SalmanMohammadi>`_
-
 torchtune comes with a host of plug-and-play memory optimization components which give you lots of flexibility
 to ``tune`` our recipes to your hardware. This page provides a brief glossary of these components and how you might use them.
 To make things easy, we've summarized these components in the following table:
